@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/material/colors.dart';
 
 class BookList extends StatelessWidget {
   const BookList({Key? key}) : super(key: key);
@@ -14,7 +13,7 @@ class BookList extends StatelessWidget {
         home: Scaffold(
           appBar: AppBar(
             title: const Text('Book List'),
-            leading: Icon(Icons.menu_book_sharp),
+            leading: const Icon(Icons.menu_book_sharp),
           ),
           body: Stack(children: [
             ListView(
@@ -27,7 +26,7 @@ class BookList extends StatelessWidget {
                        height: 180,
                        width: 350,
                        color: Colors.purple.shade50,
-                       child: Column(
+                       child: const Column(
                          children: [
                            Text('A Seleção')
                          ],
