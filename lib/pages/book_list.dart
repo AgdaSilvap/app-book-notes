@@ -1,7 +1,23 @@
 import 'package:flutter/material.dart';
 
-class BookList extends StatelessWidget {
-  const BookList({Key? key}) : super(key: key);
+class BookList extends StatefulWidget {
+  const BookList({super.key, required this.id});
+
+  final int id;
+
+  @override
+  State<BookList> createState() => _BookListState();
+}
+
+class _BookListState extends State<BookList> {
+
+  @override
+  void initState() {
+    print(widget.id);
+    //futureFilmes = getFilmes();
+    super.initState();
+
+  }
 
   @override
   Widget build(BuildContext context) {

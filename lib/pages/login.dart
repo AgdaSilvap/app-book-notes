@@ -1,3 +1,4 @@
+import 'package:book_notes/utils/api.dart';
 import 'package:flutter/material.dart';
 import 'package:book_notes/pages/book_list.dart';
 import 'package:book_notes/pages/sign_up.dart';
@@ -10,6 +11,34 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+  TextEditingController userNameTextController = TextEditingController();
+  TextEditingController passwordTextController = TextEditingController();
+
+  _login() async {
+    var data = {
+      'username': userNameTextController.text,
+      'password': passwordTextController.text,
+    };
+    print('aqui');
+    var res = await CallApi().postData(data, 'auth/');
+    print(res);
+    if (res == 200) {
+      print('aqui2');
+      // ignore: use_build_context_synchronously
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => const BookList(id: 26,)));
+    }
+  }
+
+  final _formKey = GlobalKey<FormState>();
+
+  bool valueValidator(String? value) {
+    if (value != null && value.isEmpty) {
+      return true;
+    }
+    return false;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,42 +81,43 @@ class _LoginState extends State<Login> {
                 Padding(
                   padding: const EdgeInsets.all(20.0),
                   child: TextFormField(
+                    validator: (String? value) {
+                      if (valueValidator(value)) {
+                        return 'Insira o nome de usuário';
+                      }
+                    },
+                    controller: userNameTextController,
+                    textAlign: TextAlign.start,
                     decoration: const InputDecoration(
-                      labelText: 'User name',
-                      hintText: 'Digite seu usuário!',
+                      labelText: 'User Name',
+                      hintText: 'User Name',
                       labelStyle: TextStyle(
                         fontWeight: FontWeight.bold,
                       ),
                       fillColor: Color(0xFFF3E5F5),
                       filled: true,
                     ),
-                    validator: (email) {
-                      if (email == null) {
-                        return 'Digite seu usuário!';
-                      }
-                      return null;
-                    },
                   ),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(20.0),
                   child: TextFormField(
+                    validator: (String? value) {
+                      if (valueValidator(value)) {
+                        return 'Insira a senha';
+                      }
+                    },
+                    controller: passwordTextController,
+                    textAlign: TextAlign.start,
                     decoration: const InputDecoration(
-                      label: Text('Password'),
-                      suffixIcon: Icon(Icons.visibility_off),
-                      hintText: 'Digite aqui sua senha',
+                      labelText: 'Password',
+                      hintText: 'Password',
                       labelStyle: TextStyle(
                         fontWeight: FontWeight.bold,
                       ),
                       fillColor: Color(0xFFF3E5F5),
                       filled: true,
                     ),
-                    validator: (senha) {
-                      if (senha == null) {
-                        return 'Digite seu Senha!';
-                      }
-                      return null;
-                    },
                   ),
                 ),
                 const SizedBox(
@@ -100,21 +130,28 @@ class _LoginState extends State<Login> {
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Center(
-                          child: ElevatedButton(
-                        onPressed: () {
+                          child: GestureDetector(
+                        onTap: () {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) => const SingUp()));
                         },
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.purple,
+                        child: Container(
+                          height: 45,
+                          width: 100,
+                          decoration: BoxDecoration(
+                            color: Colors.purple,
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                          child: const Center(
+                            child: Text(
+                              'SignUp',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
-                        child: const Text(
-                          'Cadastrar',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
                           ),
                         ),
                       )),
@@ -122,24 +159,35 @@ class _LoginState extends State<Login> {
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Center(
-                          child: ElevatedButton(
-                        onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => const BookList()));
-                        },
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.purple,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Center(
+                              child: GestureDetector(
+                            onTap: () {
+                              // if (_formKey.currentState!.validate()) {
+                               _login();
+                              // }
+                            },
+                            child: Container(
+                              height: 45,
+                              width: 100,
+                              decoration: BoxDecoration(
+                                color: Colors.purple,
+                                borderRadius: BorderRadius.circular(30),
+                              ),
+                              child: const Center(
+                                child: Text(
+                                  'Login',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
                             ),
-                        child: const Text(
-                          'Login',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                          ),
+                          )),
                         ),
-                      )),
+                      ),
                     ),
                   ],
                 ),
