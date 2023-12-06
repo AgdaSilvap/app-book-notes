@@ -9,9 +9,7 @@ class UserService {
       'password': password,
     };
 
-    return 28;
-
-    final response = await CallApi().postData(data,'auth/');
+    final response = await CallApi().postData(data,'auth/login');
     print(response.body);
 
     if (response.statusCode == 200) {
@@ -19,6 +17,6 @@ class UserService {
       return user['code'];
     } else {
       throw Exception('Failed to load user');
-    } 
+    }
   }
 }

@@ -33,11 +33,11 @@ class Book {
   Book.fromJson(Map<String, dynamic> json) :
    // print(json);
       code = json['code'] ?? 0,
-      title = json['title'],
-      author = json['author'],
-      gender = json['gender'],
-      createdAt = json['createdAt'],
-      imageurl = json['imageurl'],
-      sinopse = json['sinopse'],
-      linkreference = json['linkReference'];
+      title = json['title'].toString(),
+      author = json['author'].toString(),
+      gender = json['gender'].toString(),
+      createdAt = json['createdAt'].toString(),
+      imageurl = json['imageurl'].toString(),
+      sinopse = json['sinopse'].toString(),
+      linkreference = json['linkReference'].toString();
 }

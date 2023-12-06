@@ -43,13 +43,15 @@ class _BookListState extends State<BookList> {
                      future: futureBooks,
                      builder: (context, snapshot) {
                         if (snapshot.hasData) {
-                          return Column(
-                            children: snapshot.data!.map((book) {
-                              return ListTile(
-                                title: Text(book.title),
-                                subtitle: Text(book.author),
-                              );
-                            }).toList(),
+                          return Text( snapshot.data!.map((book) {
+                            return Column(
+                              children: [
+                                Text(book.title),
+                                Text(book.author),
+                                Text(book.gender),
+                              ],
+                            );
+                          }).toString()
                           );
                         } else if (snapshot.hasError) {
                           return Text('${snapshot.error}');

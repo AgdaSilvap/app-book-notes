@@ -1,10 +1,7 @@
-import 'dart:convert';
 
 import 'package:book_notes/pages/login.dart';
 import 'package:book_notes/utils/api.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:http/http.dart' as http;
 
 class SingUp extends StatefulWidget {
   const SingUp({Key? key}) : super(key: key);
