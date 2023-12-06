@@ -1,3 +1,4 @@
+import 'package:book_notes/service/user_service.dart';
 import 'package:book_notes/utils/api.dart';
 import 'package:flutter/material.dart';
 import 'package:book_notes/pages/book_list.dart';
@@ -15,18 +16,12 @@ class _LoginState extends State<Login> {
   TextEditingController passwordTextController = TextEditingController();
 
   _login() async {
-    var data = {
-      'username': userNameTextController.text,
-      'password': passwordTextController.text,
-    };
-    print('aqui');
-    var res = await CallApi().postData(data, 'auth/');
-    print(res);
-    if (res == 200) {
-      print('aqui2');
-      // ignore: use_build_context_synchronously
+    var userId = await UserService.login(username: userNameTextController.text, password: passwordTextController.text);
+    if (userId != null) {
       Navigator.push(
-          context, MaterialPageRoute(builder: (context) => const BookList(id: 26,)));
+          context,
+          MaterialPageRoute(
+              builder: (context) => BookList(id: userId)));
     }
   }
 
