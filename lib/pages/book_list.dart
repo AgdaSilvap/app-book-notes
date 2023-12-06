@@ -1,3 +1,5 @@
+import 'package:book_notes/models/book_model.dart';
+import 'package:book_notes/service/book_service.dart';
 import 'package:flutter/material.dart';
 
 class BookList extends StatefulWidget {
@@ -10,13 +12,14 @@ class BookList extends StatefulWidget {
 }
 
 class _BookListState extends State<BookList> {
+  Future<List<Book>>? futureBooks;
 
   @override
   void initState() {
     print(widget.id);
     //futureFilmes = getFilmes();
+    futureBooks = BookService.getBooksByUser(userId: widget.id);
     super.initState();
-
   }
 
   @override
@@ -36,26 +39,23 @@ class _BookListState extends State<BookList> {
               children: [
                Column(
                  children: [
-                   Padding(
-                     padding: const EdgeInsets.only(left: 2.0, right: 2.0, top: 8.0, bottom: 4.0),
-                     child: Container(
-                       height: 180,
-                       width: 350,
-                       color: Colors.purple.shade50,
-                       child: const Column(
-                         children: [
-                           Text('A Seleção')
-                         ],
-                       ),
-                     ),
-                   ),
-                   Padding(
-                     padding: const EdgeInsets.only(left: 2.0, right: 2.0, top: 4.0, bottom: 4.0),
-                     child: Container(
-                       height: 180,
-                       width: 350,
-                       color: Colors.purple.shade50,
-                     ),
+                   FutureBuilder<List<Book>>(
+                     future: futureBooks,
+                     builder: (context, snapshot) {
+                        if (snapshot.hasData) {
+                          return Column(
+                            children: snapshot.data!.map((book) {
+                              return ListTile(
+                                title: Text(book.title),
+                                subtitle: Text(book.author),
+                              );
+                            }).toList(),
+                          );
+                        } else if (snapshot.hasError) {
+                          return Text('${snapshot.error}');
+                        }
+                       return const CircularProgressIndicator();
+                     },
                    ),
                  ],
                )
