@@ -1,27 +1,43 @@
 import 'dart:convert';
-
 import 'package:http/http.dart' as http;
 
-class CallApi{
+class CallApi {
   final _url = "http://app-book-api.cloudns.org:8080/";
 
- Future<dynamic> postData(data, apiUrl) async{
+  _setHeaders() => {
+        'Content-type': 'application/json',
+        'Accept': 'application/json',
+      };
 
-   var fullUrl = _url+apiUrl;
+  //post
+  Future<http.Response> postData(data, apiUrl) async {
+    var fullUrl = _url + apiUrl;
+    print(fullUrl);
 
-   //post
-   var response = await http.post(
+    var response = await http.post(
       Uri.parse(fullUrl),
       body: jsonEncode(data),
       headers: _setHeaders(),
     );
-
-   return response.statusCode;
+    return response;
   }
 
-  _setHeaders() => {
-    'Content-type' : 'application/json',
-    'Accept' : 'application/json',
-  };
+  //get
+  Future<http.Response> getData(apiUrl) async {
+    var fullUrl = _url + apiUrl;
 
+    print(fullUrl);
+
+    var response = await http.get(
+      Uri.parse(fullUrl),
+      headers: _setHeaders(),
+    );
+
+    print(response.statusCode);
+    print(response.body);
+
+    return response;
+  }
 }
+
+
