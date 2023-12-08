@@ -1,16 +1,15 @@
-
 import 'package:book_notes/pages/login.dart';
 import 'package:book_notes/utils/api.dart';
 import 'package:flutter/material.dart';
 
-class SingUp extends StatefulWidget {
-  const SingUp({Key? key}) : super(key: key);
+class SignUp extends StatefulWidget {
+  const SignUp({Key? key}) : super(key: key);
 
   @override
-  State<SingUp> createState() => _SingUpState();
+  State<SignUp> createState() => _SignUpState();
 }
 
-class _SingUpState extends State<SingUp> {
+class _SignUpState extends State<SignUp> {
   TextEditingController nameTextController = TextEditingController();
   TextEditingController userNameTextController = TextEditingController();
   TextEditingController passwordTextController = TextEditingController();
@@ -24,13 +23,10 @@ class _SingUpState extends State<SingUp> {
 
     var res = await CallApi().postData(data, 'auth/register');
     if (res == 200) {
-      // ignore: use_build_context_synchronously
       Navigator.push(
           context, MaterialPageRoute(builder: (context) => const Login()));
     }
   }
-
-  final _formKey = GlobalKey<FormState>();
 
   bool valueValidator(String? value) {
     if (value != null && value.isEmpty) {
@@ -42,7 +38,6 @@ class _SingUpState extends State<SingUp> {
   @override
   Widget build(BuildContext context) {
     return Form(
-      key: _formKey,
       child: Scaffold(
         body: Center(
           child: Container(
@@ -73,11 +68,6 @@ class _SingUpState extends State<SingUp> {
                   Padding(
                     padding: const EdgeInsets.all(20.0),
                     child: TextFormField(
-                      validator: (String? value) {
-                        if (valueValidator(value)) {
-                          return 'Insira o nome';
-                        }
-                      },
                       controller: nameTextController,
                       textAlign: TextAlign.start,
                       decoration: const InputDecoration(
@@ -94,11 +84,6 @@ class _SingUpState extends State<SingUp> {
                   Padding(
                     padding: const EdgeInsets.all(20.0),
                     child: TextFormField(
-                      validator: (String? value) {
-                        if (valueValidator(value)) {
-                          return 'Insira o nome de usuário';
-                        }
-                      },
                       controller: userNameTextController,
                       textAlign: TextAlign.start,
                       decoration: const InputDecoration(
@@ -115,16 +100,10 @@ class _SingUpState extends State<SingUp> {
                   Padding(
                     padding: const EdgeInsets.all(20.0),
                     child: TextFormField(
-                      validator: (String? value) {
-                        if (valueValidator(value)) {
-                          return 'Insira o nome de usuário';
-                        }
-                      },
                       controller: passwordTextController,
                       textAlign: TextAlign.start,
                       decoration: const InputDecoration(
                         label: Text('password'),
-                        suffixIcon: Icon(Icons.visibility_off),
                         hintText: 'password',
                         labelStyle: TextStyle(
                           fontWeight: FontWeight.bold,
@@ -140,9 +119,7 @@ class _SingUpState extends State<SingUp> {
                     child: Center(
                         child: GestureDetector(
                       onTap: () {
-                        if (_formKey.currentState!.validate()) {
                           _register();
-                        }
                       },
                       child: Container(
                         height: 60,

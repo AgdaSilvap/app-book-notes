@@ -12,7 +12,7 @@ class CallApi {
   //post
   Future<http.Response> postData(data, apiUrl) async {
     var fullUrl = _url + apiUrl;
-    print(fullUrl);
+    //print(fullUrl);
 
     var response = await http.post(
       Uri.parse(fullUrl),
@@ -26,15 +26,15 @@ class CallApi {
   Future<http.Response> getData(apiUrl) async {
     var fullUrl = _url + apiUrl;
 
-    print(fullUrl);
+  //  print(fullUrl);
 
     var response = await http.get(
       Uri.parse(fullUrl),
       headers: _setHeaders(),
     );
 
-    print(response.statusCode);
-    print(response.body);
+   // print(response.statusCode);
+   // print(response.body);
 
     return response;
   }

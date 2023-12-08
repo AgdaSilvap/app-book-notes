@@ -25,8 +25,6 @@ class _LoginState extends State<Login> {
     }
   }
 
-  final _formKey = GlobalKey<FormState>();
-
   bool valueValidator(String? value) {
     if (value != null && value.isEmpty) {
       return true;
@@ -76,11 +74,6 @@ class _LoginState extends State<Login> {
                 Padding(
                   padding: const EdgeInsets.all(20.0),
                   child: TextFormField(
-                    validator: (String? value) {
-                      if (valueValidator(value)) {
-                        return 'Insira o nome de usuário';
-                      }
-                    },
                     controller: userNameTextController,
                     textAlign: TextAlign.start,
                     decoration: const InputDecoration(
@@ -97,11 +90,6 @@ class _LoginState extends State<Login> {
                 Padding(
                   padding: const EdgeInsets.all(20.0),
                   child: TextFormField(
-                    validator: (String? value) {
-                      if (valueValidator(value)) {
-                        return 'Insira a senha';
-                      }
-                    },
                     controller: passwordTextController,
                     textAlign: TextAlign.start,
                     decoration: const InputDecoration(
@@ -130,7 +118,7 @@ class _LoginState extends State<Login> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => const SingUp()));
+                                    builder: (context) => const SignUp()));
                         },
                         child: Container(
                           height: 45,

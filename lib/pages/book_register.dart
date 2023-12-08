@@ -8,30 +8,22 @@ class BookRegister extends StatefulWidget {
   final int id;
 
   @override
-  State<BookRegister> createState() => _SingUpState();
+  State<BookRegister> createState() => _BookRegister();
 }
 
-class _SingUpState extends State<BookRegister> {
+class _BookRegister extends State<BookRegister> {
   TextEditingController titleTextController = TextEditingController();
   TextEditingController authorTextController = TextEditingController();
   TextEditingController genderTextController = TextEditingController();
-  TextEditingController createdAtTextController = TextEditingController();
-  TextEditingController imageurlTextController = TextEditingController();
-  TextEditingController sinopseTextController = TextEditingController();
-  TextEditingController linkreferenceTextController = TextEditingController();
 
 
   _bookRegister() async {
-    var res = await await BookService.bookRegister(userId: widget.id,
+    print(widget.id);
+    var res =  await BookService.bookRegister(userId: widget.id,
         title: titleTextController.text,
         author: authorTextController.text,
-        gender: genderTextController.text,
-        creatAt: createdAtTextController.text,
-        imageurl: imageurlTextController.text,
-        sinopse: sinopseTextController.text,
-        linkreference: linkreferenceTextController.text);
+        gender: genderTextController.text);
     if (res == 200) {
-      // ignore: use_build_context_synchronously
       Navigator.pop(
           context,
           MaterialPageRoute(builder: (context) => BookList(id: widget.id)));
@@ -40,8 +32,6 @@ class _SingUpState extends State<BookRegister> {
       print(res);
     }
   }
-
-  final _formKey = GlobalKey<FormState>();
 
   bool valueValidator(String? value) {
     if (value != null && value.isEmpty) {
@@ -53,7 +43,6 @@ class _SingUpState extends State<BookRegister> {
   @override
   Widget build(BuildContext context) {
     return Form(
-      key: _formKey,
       child: Scaffold(
         body: Center(
           child: ListView(
@@ -75,11 +64,6 @@ class _SingUpState extends State<BookRegister> {
                       Padding(
                         padding: const EdgeInsets.all(20.0),
                         child: TextFormField(
-                          validator: (String? value) {
-                            if (valueValidator(value)) {
-                              return 'Insira o título do livro';
-                            }
-                          },
                           controller: titleTextController,
                           textAlign: TextAlign.start,
                           decoration: const InputDecoration(
@@ -96,11 +80,6 @@ class _SingUpState extends State<BookRegister> {
                       Padding(
                         padding: const EdgeInsets.all(20.0),
                         child: TextFormField(
-                          validator: (String? value) {
-                            if (valueValidator(value)) {
-                              return 'Insira o autor do livro';
-                            }
-                          },
                           controller: authorTextController,
                           textAlign: TextAlign.start,
                           decoration: const InputDecoration(
@@ -117,100 +96,11 @@ class _SingUpState extends State<BookRegister> {
                       Padding(
                         padding: const EdgeInsets.all(20.0),
                         child: TextFormField(
-                          validator: (String? value) {
-                            if (valueValidator(value)) {
-                              return 'Insira o gênero do livro';
-                            }
-                          },
                           controller: genderTextController,
                           textAlign: TextAlign.start,
                           decoration: const InputDecoration(
                             label: Text('gender'),
                             hintText: 'gender',
-                            labelStyle: TextStyle(
-                              fontWeight: FontWeight.bold,
-                            ),
-                            fillColor: Color(0xFFF3E5F5),
-                            filled: true,
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(20.0),
-                        child: TextFormField(
-                          validator: (String? value) {
-                            if (valueValidator(value)) {
-                              return 'Insira o ano de publicação do livro';
-                            }
-                          },
-                          controller: createdAtTextController,
-                          textAlign: TextAlign.start,
-                          decoration: const InputDecoration(
-                            label: Text('year'),
-                            hintText: 'year',
-                            labelStyle: TextStyle(
-                              fontWeight: FontWeight.bold,
-                            ),
-                            fillColor: Color(0xFFF3E5F5),
-                            filled: true,
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(20.0),
-                        child: TextFormField(
-                          validator: (String? value) {
-                            if (valueValidator(value)) {
-                              return 'Insira o link da capa do livro';
-                            }
-                          },
-                          controller: imageurlTextController,
-                          textAlign: TextAlign.start,
-                          decoration: const InputDecoration(
-                            label: Text('imageurl'),
-                            hintText: 'imageurl',
-                            labelStyle: TextStyle(
-                              fontWeight: FontWeight.bold,
-                            ),
-                            fillColor: Color(0xFFF3E5F5),
-                            filled: true,
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(20.0),
-                        child: TextFormField(
-                          validator: (String? value) {
-                            if (valueValidator(value)) {
-                              return 'Insira o link da sinopse do livro';
-                            }
-                          },
-                          controller: sinopseTextController,
-                          textAlign: TextAlign.start,
-                          decoration: const InputDecoration(
-                            label: Text('sinopse'),
-                            hintText: 'sinopse',
-                            labelStyle: TextStyle(
-                              fontWeight: FontWeight.bold,
-                            ),
-                            fillColor: Color(0xFFF3E5F5),
-                            filled: true,
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(20.0),
-                        child: TextFormField(
-                          validator: (String? value) {
-                            if (valueValidator(value)) {
-                              return 'Insira o link de referência do livro';
-                            }
-                          },
-                          controller: linkreferenceTextController,
-                          textAlign: TextAlign.start,
-                          decoration: const InputDecoration(
-                            label: Text('reference'),
-                            hintText: 'reference',
                             labelStyle: TextStyle(
                               fontWeight: FontWeight.bold,
                             ),
@@ -225,9 +115,7 @@ class _SingUpState extends State<BookRegister> {
                         child: Center(
                             child: GestureDetector(
                               onTap: () {
-                                if (_formKey.currentState!.validate()) {
                                   _bookRegister();
-                                }
                               },
                               child: Container(
                                 height: 60,

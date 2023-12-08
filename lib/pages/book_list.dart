@@ -1,4 +1,7 @@
+import 'package:book_notes/components/book.dart';
+import 'package:book_notes/components/list_books.dart';
 import 'package:book_notes/models/book_model.dart';
+import 'package:book_notes/pages/book_register.dart';
 import 'package:book_notes/service/book_service.dart';
 import 'package:flutter/material.dart';
 
@@ -16,8 +19,6 @@ class _BookListState extends State<BookList> {
 
   @override
   void initState() {
-    print(widget.id);
-    //futureFilmes = getFilmes();
     futureBooks = BookService.getBooksByUser(userId: widget.id);
     super.initState();
   }
@@ -34,36 +35,39 @@ class _BookListState extends State<BookList> {
             title: const Text('Book List'),
             leading: const Icon(Icons.menu_book_sharp),
           ),
-          body: Stack(children: [
-            ListView(
-              children: [
-               Column(
-                 children: [
-                   FutureBuilder<List<Book>>(
-                     future: futureBooks,
-                     builder: (context, snapshot) {
-                        if (snapshot.hasData) {
-                          return Text( snapshot.data!.map((book) {
-                            return Column(
-                              children: [
-                                Text(book.title),
-                                Text(book.author),
-                                Text(book.gender),
-                              ],
-                            );
-                          }).toString()
-                          );
-                        } else if (snapshot.hasError) {
-                          return Text('${snapshot.error}');
-                        }
-                       return const CircularProgressIndicator();
-                     },
-                   ),
-                 ],
-               )
-              ],
-            )
-          ]),
-        ));
+          body: FutureBuilder(
+            future: futureBooks,
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                final books = snapshot.data as List<Book>;
+                return ListBooks(book : books);
+              } else if (snapshot.hasError) {
+                return Center(
+                  child: Text(
+                    snapshot.error.toString(),
+                    style: const TextStyle(
+                      fontSize: 16,
+                    ),
+                  ),
+                );
+              }
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            },
+          ),
+          floatingActionButton: FloatingActionButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (contextNew) => BookRegister(id: widget.id),
+                ),
+              );
+            },
+            child: const Icon(Icons.add),
+          ),
+        )
+    );
   }
 }

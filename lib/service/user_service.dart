@@ -10,7 +10,6 @@ class UserService {
     };
 
     final response = await CallApi().postData(data,'auth/login');
-    print(response.body);
 
     if (response.statusCode == 200) {
       final Map<String, dynamic> user = jsonDecode(response.body);
