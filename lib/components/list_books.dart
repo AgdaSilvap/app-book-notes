@@ -18,10 +18,11 @@ class ListBooks extends StatelessWidget {
       itemBuilder: ((context, index) {
         final books = book[index];
         return CardBook(
-          code: books.code,
           title: books.title,
           author: books.author,
           gender: books.gender,
+          sinopse: books.sinopse,
+          codeUser: books.codUser,
         );
       }),
     );

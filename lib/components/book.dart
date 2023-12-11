@@ -2,17 +2,19 @@
 import 'package:flutter/material.dart';
 
 class CardBook extends StatelessWidget {
-  final int code;
   final String title;
   final String author;
   final String gender;
+  final String sinopse;
+  final int codeUser;
 
   const CardBook({
     Key? key,
-    required this.code,
     required this.title,
     required this.author,
     required this.gender,
+    required this.sinopse,
+    required this.codeUser,
   }) : super(key: key);
 
   @override

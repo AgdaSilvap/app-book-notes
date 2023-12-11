@@ -27,6 +27,8 @@ class BookService {
       'title': title,
       'author': author,
       'gender': gender,
+      'sinopse' : 'sinopse',
+      'codeUser' : userId,
     };
 
     final response = await CallApi().postData(data, 'book/register');

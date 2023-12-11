@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:book_notes/utils/api.dart';
 
 class UserService {
